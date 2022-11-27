@@ -1,18 +1,45 @@
 import React, { useState } from "react";
-import Input from "../atoms/Input";
+import { useNavigate } from "react-router-dom";
+
 import { IRegisterState } from "../types";
 import { register as registerApi, IRegisterBody } from "../api";
+
 import myAlert from "../utils/myAlert";
 import myToast from "../utils/myToast";
 import Cookies from "js-cookie";
 
+import Input from "../atoms/Input";
+import { FaGoogle, FaGithub } from "react-icons/fa";
+
+import {
+  GithubAuthProvider,
+  GoogleAuthProvider,
+  signInWithPopup,
+} from "firebase/auth";
+import { auth as googleAuth } from "../firebase";
+
 const Register: React.FC = () => {
+  const navigate = useNavigate();
+  const googleProvider = new GoogleAuthProvider();
+  const githubProvider = new GithubAuthProvider();
   const [state, setState] = useState<IRegisterState>({
     name: "",
     username: "",
     password: "",
     repeat_password: "",
   });
+
+  const registerHelper = async (body: IRegisterBody) => {
+    try {
+      const { data } = await registerApi(body);
+      Cookies.set("accessToken", data.accessToken);
+      Cookies.set("refreshToken", data.refreshToken);
+      myToast("Register Success");
+      window.location.reload();
+    } catch (err) {
+      myAlert(err);
+    }
+  };
 
   const handleRegisterClick = async (
     event: React.MouseEvent<HTMLButtonElement, MouseEvent>
@@ -23,15 +50,39 @@ const Register: React.FC = () => {
       provider: "emailPassword",
       profilePhotoURL: `https://ui-avatars.com/api?background=random&name=${state.name}`,
     };
-    try {
-      const { data } = await registerApi(body);
-      Cookies.set("accessToken", data.accessToken);
-      Cookies.set("refreshToken", data.refreshToken);
-      myToast("Register Success");
-      window.location.reload();
-    } catch (err) {
-      myAlert(err);
-    }
+    await registerHelper(body);
+  };
+
+  const handleGoogleRegister = () => {
+    signInWithPopup(googleAuth, googleProvider)
+      .then(async (response) => {
+        const body: IRegisterBody = {
+          name: response.user.displayName as string,
+          username: response.user.email as string,
+          profilePhotoURL: response.user.photoURL as string,
+          provider: "google",
+        };
+        await registerHelper(body);
+      })
+      .catch((err) => {
+        myAlert(err);
+      });
+  };
+
+  const handleGithubRegister = () => {
+    signInWithPopup(googleAuth, githubProvider)
+      .then(async (response) => {
+        const body: IRegisterBody = {
+          name: response.user.displayName as string,
+          username: response.user.email as string,
+          profilePhotoURL: response.user.photoURL as string,
+          provider: "github",
+        };
+        await registerHelper(body);
+      })
+      .catch((err) => {
+        myAlert(err);
+      });
   };
 
   return (
@@ -75,6 +126,32 @@ const Register: React.FC = () => {
             Register
           </button>
         </form>
+        <p className="text-white text-center my-4"> -- or continue with -- </p>
+        <div className="fcc space-x-10">
+          <button
+            className="fcc bg-mBlack-300 space-x-2 p-3 rounded-lg"
+            onClick={handleGoogleRegister}
+          >
+            <FaGoogle className="text-white" />
+            <p className="text-white font-semibold">Google</p>
+          </button>
+          <button
+            className="fcc bg-mBlack-300 space-x-2 p-3 rounded-lg"
+            onClick={handleGithubRegister}
+          >
+            <FaGithub className="text-white text-xl" />
+            <p className="text-white font-semibold">Github</p>
+          </button>
+        </div>
+        <p className="text-white text-center my-3">
+          Already have an account?{" "}
+          <span
+            className="cursor-pointer font-semibold"
+            onClick={() => navigate("/login")}
+          >
+            Login Here
+          </span>
+        </p>
       </div>
     </div>
   );
