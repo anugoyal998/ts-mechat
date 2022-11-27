@@ -34,7 +34,7 @@ const Login: React.FC = () => {
     <div className="bg-mBlack-300  w-screen h-screen fcc">
       <div className="w-[500px] bg-mBlack-100 p-4 rounded-md shadow-xl">
         <p className="text-xl font-semibold text-center text-white">MeChat</p>
-        <p className="mb-4 text-center text-white">Register to continue...</p>
+        <p className="mb-4 text-center text-white">Login to continue...</p>
         <form className="w-full flex flex-col space-y-4">
           <Input
             type="email"

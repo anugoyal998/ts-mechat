@@ -7,6 +7,11 @@ const api = axios.create({
     }
 })
 
+type IToken = {
+    accessToken: string;
+    refreshToken: string;
+}
+
 /****Register***/
 
 export type IRegisterBody = {
@@ -18,12 +23,7 @@ export type IRegisterBody = {
     repeat_password?: string;
 }
 
-type IRegisterResponse = {
-    accessToken: string;
-    refreshToken: string;
-}
-
-export const register = (data: IRegisterBody) => api.post<IRegisterResponse>("/api/register",data)
+export const register = (data: IRegisterBody) => api.post<IToken>("/api/register",data)
 
 /****Register***/
 
@@ -35,11 +35,16 @@ export type ILoginBody = {
     password?: string;
 }
 
-type ILoginResponse = {
-    accessToken: string;
+export const login = (data: ILoginBody) => api.post<IToken>("/api/login",data)
+
+/***Login**/
+
+/***Refresh***/
+
+export type IRefreshBody = {
     refreshToken: string;
 }
 
-export const login = (data: ILoginBody) => api.post<ILoginResponse>("/api/login",data)
+export const refresh = (data: IRefreshBody) => api.post<IToken>("/api/refresh",data)
 
-/***Login**/
+/***Refresh***/
