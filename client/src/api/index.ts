@@ -7,6 +7,8 @@ const api = axios.create({
     }
 })
 
+/****Register***/
+
 export type IRegisterBody = {
     provider: string;
     username: string;
@@ -22,3 +24,22 @@ type IRegisterResponse = {
 }
 
 export const register = (data: IRegisterBody) => api.post<IRegisterResponse>("/api/register",data)
+
+/****Register***/
+
+/***Login**/
+
+export type ILoginBody = {
+    provider: string;
+    username: string;
+    password?: string;
+}
+
+type ILoginResponse = {
+    accessToken: string;
+    refreshToken: string;
+}
+
+export const login = (data: ILoginBody) => api.post<ILoginResponse>("/api/login",data)
+
+/***Login**/

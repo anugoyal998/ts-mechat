@@ -23,7 +23,6 @@ const Register: React.FC = () => {
       provider: "emailPassword",
       profilePhotoURL: `https://ui-avatars.com/api?background=random&name=${state.name}`,
     };
-    console.log(body);
     try {
       const { data } = await registerApi(body);
       Cookies.set("accessToken", data.accessToken);

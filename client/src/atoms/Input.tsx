@@ -1,12 +1,14 @@
 import React, { useState } from "react";
-import { IRegisterState } from "../types";
+import { ILoginState, IRegisterState } from "../types";
 
 interface IProps {
   type: string;
   placeholder: string;
   value: string;
   name: string;
-  setState: React.Dispatch<React.SetStateAction<IRegisterState>>;
+  setState:
+    | React.Dispatch<React.SetStateAction<IRegisterState>>
+    | React.Dispatch<React.SetStateAction<ILoginState>>;
 }
 
 const Input: React.FC<IProps> = ({
@@ -24,7 +26,7 @@ const Input: React.FC<IProps> = ({
       value={value}
       name={name}
       onChange={(event: React.ChangeEvent<HTMLInputElement>) =>
-        setState((prev) => ({
+        setState((prev: any) => ({
           ...prev,
           [event.target.name]: event.target.value,
         }))

@@ -4,3 +4,8 @@ export type IRegisterState = {
     password: string;
     repeat_password: string;
 }
+
+export type ILoginState = {
+    username: string;
+    password: string;
+}
