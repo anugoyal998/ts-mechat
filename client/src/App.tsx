@@ -1,14 +1,12 @@
-import React from 'react'
-import Login from './pages/Login'
-import Register from "./pages/Register"
+import React from "react";
+import Register from "./pages/Register";
 
 const App: React.FC = () => {
   return (
     <div>
-      <Login/>
-      {/* <Register /> */}
+      <Register />
     </div>
-  )
-} 
+  );
+};
 
-export default App
+export default App;
