@@ -12,6 +12,12 @@ export type ILoginState = {
 }
 /***Auth**/
 
+/***WhoAmI**/
+
+export { IWhoAmIResponse as IUserDetailsState } from "../api"
+
+/***WhoAmI**/
+
 /***JwtDecode**/
 export type IJwtPayload = {
     name: string;

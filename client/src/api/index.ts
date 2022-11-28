@@ -12,6 +12,17 @@ type IToken = {
     refreshToken: string;
 }
 
+export type IRefreshTokenBody = {
+    refreshToken: string;
+}
+
+type IProvider = {
+    provider: string;
+    name: string;
+    profilePhotoURL: string;
+    isEmailPassword: boolean;
+}
+
 /****Register***/
 
 export type IRegisterBody = {
@@ -41,10 +52,32 @@ export const login = (data: ILoginBody) => api.post<IToken>("/api/login",data)
 
 /***Refresh***/
 
-export type IRefreshBody = {
-    refreshToken: string;
-}
-
-export const refresh = (data: IRefreshBody) => api.post<IToken>("/api/refresh",data)
+export const refresh = (data: IRefreshTokenBody) => api.post<IToken>("/api/refresh",data)
 
 /***Refresh***/
+
+/***me***/
+
+export type IWhoAmIResponse = {
+    _id: string;
+    username: string;
+    providers: IProvider[];
+}
+  
+export const whoAmI = (token: string) => api.get<IWhoAmIResponse>("/api/whoAmI",{
+    headers: {
+        authorization: `Bearer ${token}`
+    }
+})
+
+/***me***/
+
+/***Logout**/
+
+export const logout = (data: IRefreshTokenBody, token: string) => api.post("/api/logout",data,{
+    headers: {
+        authorization: `Bearer ${token}`
+    }
+})
+
+/***Logout**/
