@@ -81,3 +81,13 @@ export const logout = (data: IRefreshTokenBody, token: string) => api.post("/api
 })
 
 /***Logout**/
+
+/***All Users**/
+
+export const allUsers = (token: string) => api.get<IWhoAmIResponse[]>("/api/allUsers",{
+    headers: {
+        Authorization: `Bearer ${token}`
+    }
+})
+
+/***All Users**/

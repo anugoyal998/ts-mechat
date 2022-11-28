@@ -45,4 +45,16 @@ export type TAuthStore = {
     setIsAuth: (isAuth: boolean) => void;
     setAuth: (auth: TAuthState) => void;
 }
+
+export type ICurrentChatState = {
+    name: string;
+    username: string;
+    profilePhotoURL: string;
+}
+
+export type ICurrentChatStore = {
+    currentChat: ICurrentChatState | undefined;
+    setCurrentChat: (currentChat: ICurrentChatState) => void;
+}
+
 /***Zustand***/

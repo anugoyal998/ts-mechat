@@ -10,6 +10,7 @@ const useRefresh = () => {
     const setAuth = useAuth((state) => state.setAuth)
     const accessToken = Cookies.get("accessToken");
     const refreshToken = Cookies.get("refreshToken");
+    // console.log(accessToken)
 
     const refreshTokenFunction = async (token: string) => {
         try {

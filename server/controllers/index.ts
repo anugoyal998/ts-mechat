@@ -1,0 +1,1 @@
+export { allUsersController } from "./allUsersController"

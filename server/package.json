@@ -19,7 +19,7 @@
     "joi": "^17.7.0",
     "jsonwebtoken": "^8.5.1",
     "mongoose": "^6.7.2",
-    "ts-auth-express": "^1.0.1"
+    "ts-auth-express": "^1.0.2"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
