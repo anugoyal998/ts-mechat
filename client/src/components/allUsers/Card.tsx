@@ -7,10 +7,17 @@ interface IProps {
 }
 
 const Card: React.FC<IProps> = ({ user }) => {
-  const setCurrentChat = useCurrentChat((state) => state.setCurrentChat);
+  const [currentChat, setCurrentChat] = useCurrentChat((state) => [
+    state.currentChat,
+    state.setCurrentChat,
+  ]);
   return (
     <div
-      className="my-4 bg-mBlack-300 flex items-center justify-between p-3 rounded-md w-full cursor-pointer hover:bg-[#25262b]"
+      className={`my-4 ${
+        user.username === currentChat?.username
+          ? "bg-[#25262b]"
+          : "bg-mBlack-300"
+      } flex items-center justify-between p-3 rounded-md w-full cursor-pointer hover:bg-[#25262b]`}
       onClick={() =>
         setCurrentChat({
           name: user.providers[0].name,

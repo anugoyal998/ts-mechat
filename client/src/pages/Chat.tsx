@@ -8,6 +8,7 @@ import { allUsers as allUsersApi, whoAmI as whoAmIApi } from '../api'
 
 import myAlert from '../utils/myAlert'
 import AllUsers from '../components/allUsers/AllUsers'
+import Message from '../components/message/Message'
 
 const Chat: React.FC = () => {
 
@@ -35,7 +36,10 @@ const Chat: React.FC = () => {
         <div className="h-[20px]"></div>
         <Navbar userDetails={userDetails} />
       </div>
-      <AllUsers allUsersState={allUsersState} allUsersStateCopy={allUsersStateCopy} setAllUsersState={setAllUsersState} />
+      <div className='flex space-x-6'>
+        <AllUsers allUsersState={allUsersState} allUsersStateCopy={allUsersStateCopy} setAllUsersState={setAllUsersState} />
+        <Message/>
+      </div>
     </div>
   )
 }

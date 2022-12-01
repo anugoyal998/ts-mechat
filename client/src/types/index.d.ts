@@ -50,6 +50,7 @@ export type ICurrentChatState = {
     name: string;
     username: string;
     profilePhotoURL: string;
+    isOnline?: boolean;
 }
 
 export type ICurrentChatStore = {

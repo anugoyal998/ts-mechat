@@ -18,7 +18,7 @@ const AllUsers: React.FC<IProps> = ({ allUsersState, setAllUsersState, allUsersS
 
   if (!allUsersState) return null;
   return (
-    <div className="w-[400px] bg-mBlack-100 rounded-md shadow-xl p-3">
+    <div className="bg-mBlack-100 rounded-md shadow-xl p-3" style={{ width: "400px !important"}} >
       <Searchbar
         value={search}
         setSearch={setSearch}
