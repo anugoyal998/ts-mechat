@@ -3,7 +3,7 @@ import React from "react";
 import useRefresh from "./hooks/useRefresh";
 import useAuth from "./states/useAuth";
 
-import { Routes, Route, Navigate } from "react-router-dom";
+import { Routes, Route, Navigate } from "react-router-dom"
 
 import Login from "./pages/Login";
 import Register from "./pages/Register";
