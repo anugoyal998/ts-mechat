@@ -39,7 +39,7 @@ const Editor: React.FC<IProps> = ({ socketRef, setMsgs }) => {
         { reciever: currentChat?.username as string, msg, msgType: "text" },
         token as string
       );
-      setMsg("")
+      setMsg("");
       setMsgs((prev) => [
         ...prev,
         {
@@ -53,19 +53,21 @@ const Editor: React.FC<IProps> = ({ socketRef, setMsgs }) => {
     } catch (err) {
       myAlert(err);
     }
-  }
+  };
 
   const sendMsg = async (
-    e: React.MouseEvent<HTMLButtonElement, MouseEvent> | React.KeyboardEvent<HTMLTextAreaElement>
+    e:
+      | React.MouseEvent<HTMLButtonElement, MouseEvent>
+      | React.KeyboardEvent<HTMLTextAreaElement>
   ) => {
     if (!msg || !socketRef) return;
-    if(e.type === 'keydown') {
-      const keyboardEvent = e as React.KeyboardEvent<HTMLTextAreaElement>
-      if(keyboardEvent.code === "Enter" && keyboardEvent.ctrlKey){
-        helpFn()
+    if (e.type === "keydown") {
+      const keyboardEvent = e as React.KeyboardEvent<HTMLTextAreaElement>;
+      if (keyboardEvent.code === "Enter" && keyboardEvent.ctrlKey) {
+        helpFn();
       }
-    }else if(e.type === 'click'){
-      helpFn()
+    } else if (e.type === "click") {
+      helpFn();
     }
   };
 

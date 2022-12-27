@@ -8,8 +8,7 @@ import { IMsg } from "../../types";
 import { Socket } from "socket.io-client";
 import { ClientToServerEvents, ServerToClientEvents } from "../../socket.types";
 import SOCKET_EVENTS from "../../enum.socket";
-import TimeAgo from 'react-timeago'
-
+import TimeAgo from "react-timeago";
 
 interface IProps {
   msgs: IMsg[];

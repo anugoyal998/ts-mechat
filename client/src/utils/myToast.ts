@@ -1,5 +1,5 @@
 const myToast = (msg: string) => {
-    alert(msg);
-}
+  alert(msg);
+};
 
-export default myToast
+export default myToast;

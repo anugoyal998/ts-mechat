@@ -26,7 +26,7 @@ const Searchbar: React.FC<IProps> = ({
         value={value}
         onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
           setSearch(event.target.value);
-          if(event.target.value === '')setAllUsersState(allUsersStateCopy)
+          if (event.target.value === "") setAllUsersState(allUsersStateCopy);
           const filteredData = allUsersStateCopy?.filter(
             (user) =>
               user.username

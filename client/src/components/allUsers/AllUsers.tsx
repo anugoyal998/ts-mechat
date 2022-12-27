@@ -12,13 +12,20 @@ interface IProps {
   >;
 }
 
-const AllUsers: React.FC<IProps> = ({ allUsersState, setAllUsersState, allUsersStateCopy }) => {
+const AllUsers: React.FC<IProps> = ({
+  allUsersState,
+  setAllUsersState,
+  allUsersStateCopy,
+}) => {
   const [search, setSearch] = useState<string>("");
   const username = useAuth((state) => state.auth.username);
 
   if (!allUsersState) return null;
   return (
-    <div className="bg-mBlack-100 rounded-md shadow-xl p-3" style={{ width: "400px !important"}} >
+    <div
+      className="bg-mBlack-100 rounded-md shadow-xl p-3"
+      style={{ width: "400px !important" }}
+    >
       <Searchbar
         value={search}
         setSearch={setSearch}

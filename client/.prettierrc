@@ -1,0 +1,12 @@
+{
+  "semi": true,
+  "overrides": [
+    {
+      "files": ".ts",
+      "options": {
+        "semi": false
+      }
+    }
+  ],
+  "tabWidth": 2
+}

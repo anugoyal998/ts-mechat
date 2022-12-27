@@ -72,7 +72,7 @@ const NavUser: React.FC<IProps> = ({ userDetails }) => {
         </li>
         <hr className="opacity-60 my-2" />
         <li className="w-full">
-          {userDetails?.providers.map((provider,index) => (
+          {userDetails?.providers.map((provider, index) => (
             <Card
               key={index.toString()}
               name={provider.name}

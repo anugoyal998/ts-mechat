@@ -1,0 +1,8 @@
+node_modules
+*.html
+*.json
+.prettierrc
+.prettierignore
+*.config.js
+*.config.cjs
+*.config.ts

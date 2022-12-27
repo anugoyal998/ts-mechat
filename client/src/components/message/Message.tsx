@@ -11,19 +11,19 @@ import { ClientToServerEvents, ServerToClientEvents } from "../../socket.types";
 import { Socket } from "socket.io-client";
 import useAuth from "../../states/useAuth";
 import SOCKET_EVENTS from "../../enum.socket";
-import myToast from "../../utils/myToast"
+import myToast from "../../utils/myToast";
 import useActiveUsers from "../../states/useActiveUsers";
 import { IActiveUser, IMsg } from "../../types";
 
 const Message: React.FC = () => {
   const currentChat = useCurrentChat((state) => state.currentChat);
-  const auth = useAuth((state) => state.auth)
-  const setActiveUsers = useActiveUsers((state) => state.setActiveUsers)
+  const auth = useAuth((state) => state.auth);
+  const setActiveUsers = useActiveUsers((state) => state.setActiveUsers);
   const socketRef = useRef<Socket<
     ServerToClientEvents,
     ClientToServerEvents
   > | null>(null);
-  const [msgs, setMsgs] = useState<IMsg[]>([])
+  const [msgs, setMsgs] = useState<IMsg[]>([]);
 
   useEffect(() => {
     const init = async () => {
@@ -31,23 +31,23 @@ const Message: React.FC = () => {
     };
     init();
     return () => {
-      socketRef.current?.disconnect()
-    }
+      socketRef.current?.disconnect();
+    };
   }, []);
 
   useEffect(() => {
-    if(!socketRef.current)return
+    if (!socketRef.current) return;
     /*@ts-ignore*/
-    socketRef.current.emit(SOCKET_EVENTS.user_online,auth)
-  },[socketRef.current])
+    socketRef.current.emit(SOCKET_EVENTS.user_online, auth);
+  }, [socketRef.current]);
 
   useEffect(() => {
-    if(!socketRef.current)return
+    if (!socketRef.current) return;
     /*@ts-ignore*/
-    socketRef.current.on(SOCKET_EVENTS.activeUsers,(data) => {
-      setActiveUsers(data)
-    })
-  },[socketRef.current])
+    socketRef.current.on(SOCKET_EVENTS.activeUsers, (data) => {
+      setActiveUsers(data);
+    });
+  }, [socketRef.current]);
 
   if (!currentChat) {
     return (
