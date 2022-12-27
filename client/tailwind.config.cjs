@@ -11,7 +11,8 @@ module.exports = {
           "100": "#16161B",
           "300": "#0A0A11"
         },
-        mOrange: "#FD5831"
+        mOrange: "#FD5831",
+        mPurple: "#621BE3"
       }
     },
   },

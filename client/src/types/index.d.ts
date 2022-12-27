@@ -18,6 +18,16 @@ export { IWhoAmIResponse as IUserDetailsState } from "../api"
 
 /***WhoAmI**/
 
+/***** Send Msg */
+export type IMsg = {
+    sender: string;
+    reciever: string;
+    msg: string | number | readonly string[] | undefined;
+    msgType: string;
+    createdAt: number;
+}
+/***** Send Msg */
+
 /***JwtDecode**/
 export type IJwtPayload = {
     name: string;
@@ -56,6 +66,16 @@ export type ICurrentChatState = {
 export type ICurrentChatStore = {
     currentChat: ICurrentChatState | undefined;
     setCurrentChat: (currentChat: ICurrentChatState) => void;
+}
+
+export type IActiveUser = {
+    user: TAuthState;
+    id: string;
+}
+
+export type IActiveUsersStore = {
+    activeUsers: IActiveUser[] | undefined;
+    setActiveUsers: (activeUsers: IActiveUser[]) => void;
 }
 
 /***Zustand***/

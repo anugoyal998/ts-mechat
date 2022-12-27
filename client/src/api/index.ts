@@ -1,4 +1,5 @@
 import axios from "axios"
+import { IMsg } from "../types";
 
 const api = axios.create({
     baseURL: import.meta.env.VITE_API_URL,
@@ -91,3 +92,29 @@ export const allUsers = (token: string) => api.get<IWhoAmIResponse[]>("/api/allU
 })
 
 /***All Users**/
+
+/*** Send Msg ***/
+
+export type ISendMsgBody = {
+    reciever: string;
+    msg: string | number | readonly string[] | undefined;
+    msgType: string;
+}
+
+export const sendMsg = (data: ISendMsgBody, token: string) => api.post("/api/send-msg",data,{
+    headers: {
+        Authorization: `Bearer ${token}`
+    }
+})
+
+/*** Send Msg ***/
+
+/*** Get Msgs */
+
+export const getMsgs = (reciever: string, token: string) => api.post<IMsg[]>("/api/get-msgs",{reciever},{
+    headers: {
+        Authorization: `Bearer ${token}`
+    }
+})
+
+/*** Get Msgs */
