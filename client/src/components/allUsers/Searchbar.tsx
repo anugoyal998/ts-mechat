@@ -22,7 +22,7 @@ const Searchbar: React.FC<IProps> = ({
       <input
         type="search"
         placeholder="Search..."
-        className="w-full px-5 py-2 bg-mBlack-300 outline-none rounded-3xl"
+        className="w-full px-5 py-2 bg-mBlack-300 outline-none rounded-3xl text-white"
         value={value}
         onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
           setSearch(event.target.value);

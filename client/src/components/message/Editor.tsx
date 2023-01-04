@@ -9,22 +9,24 @@ import { sendMsg as sendMsgApi } from "../../api";
 import Cookies from "js-cookie";
 import SOCKET_EVENTS from "../../enum.socket";
 import { IMsg } from "../../types";
+import useMsgs from "../../states/useMsgs";
 
 interface IProps {
   socketRef: React.MutableRefObject<Socket<
     ServerToClientEvents,
     ClientToServerEvents
   > | null>;
-  setMsgs: React.Dispatch<React.SetStateAction<IMsg[]>>;
 }
 
-const Editor: React.FC<IProps> = ({ socketRef, setMsgs }) => {
+const Editor: React.FC<IProps> = ({ socketRef }) => {
   const [msg, setMsg] = useState<
     string | number | readonly string[] | undefined
   >("");
   const currentChat = useCurrentChat((state) => state.currentChat);
   const auth = useAuth((state) => state.auth);
   const token = Cookies.get("accessToken");
+  const setMsgsUsingCallbackFn = useMsgs((state) => state.setMsgsUsingCallbackFn);
+
 
   const helpFn = async () => {
     try {
@@ -40,7 +42,7 @@ const Editor: React.FC<IProps> = ({ socketRef, setMsgs }) => {
         token as string
       );
       setMsg("");
-      setMsgs((prev) => [
+      setMsgsUsingCallbackFn((prev: IMsg[]) => [
         ...prev,
         {
           sender: auth.username,
@@ -74,7 +76,7 @@ const Editor: React.FC<IProps> = ({ socketRef, setMsgs }) => {
   return (
     <div className="bg-mBlack-300 w-full rounded-xl py-2 px-5 h-[65px] fcc">
       <textarea
-        className="w-full h-[45px] bg-transparent outline-none border border-gray-400 rounded-3xl px-5"
+        className="w-full h-[45px] bg-transparent outline-none border border-gray-400 rounded-3xl px-5 text-white"
         placeholder="Write your message..."
         value={msg}
         onChange={(e) => setMsg(e.target.value)}

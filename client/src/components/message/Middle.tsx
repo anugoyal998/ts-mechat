@@ -8,20 +8,59 @@ import { IMsg } from "../../types";
 import { Socket } from "socket.io-client";
 import { ClientToServerEvents, ServerToClientEvents } from "../../socket.types";
 import SOCKET_EVENTS from "../../enum.socket";
-import TimeAgo from "react-timeago";
+import { ISetMsgs } from "./Message";
+import Card from "./Card";
+import useMsgs from "../../states/useMsgs";
+
+const DummyData: IMsg[] = [
+  {
+    sender: "",
+    reciever: "",
+    msg: "",
+    msgType: "",
+    createdAt: 1,
+  },
+  {
+    sender: "",
+    reciever: "",
+    msg: "",
+    msgType: "",
+    createdAt: 1,
+  },
+  {
+    sender: "",
+    reciever: "",
+    msg: "",
+    msgType: "",
+    createdAt: 1,
+  },
+  {
+    sender: "",
+    reciever: "",
+    msg: "",
+    msgType: "",
+    createdAt: 1,
+  },
+  {
+    sender: "",
+    reciever: "",
+    msg: "",
+    msgType: "",
+    createdAt: 1,
+  },
+]
 
 interface IProps {
-  msgs: IMsg[];
-  setMsgs: React.Dispatch<React.SetStateAction<IMsg[]>>;
   socketRef: React.MutableRefObject<Socket<
     ServerToClientEvents,
     ClientToServerEvents
   > | null>;
 }
 
-const Middle: React.FC<IProps> = ({ msgs, setMsgs, socketRef }) => {
+const Middle: React.FC<IProps> = ({ socketRef }) => {
   const auth = useAuth((state) => state.auth);
   const currentChat = useCurrentChat((state) => state.currentChat);
+  const [msgs, setMsgs] = useMsgs((state) => [state.msgs, state.setMsgs]);
   const ref = useRef();
   const [temp, setTemp] = useState<IMsg>();
   const token = Cookies.get("accessToken");
@@ -72,28 +111,7 @@ const Middle: React.FC<IProps> = ({ msgs, setMsgs, socketRef }) => {
       /**@ts-ignore */
       ref={ref}
     >
-      {msgs?.map((msg: IMsg, index: number) => (
-        <div
-          className={`flex ${
-            currentChat?.username === msg.reciever
-              ? "justify-end"
-              : "justify-start"
-          } py-1`}
-        >
-          <div
-            className={`w-[60%] ${
-              currentChat?.username === msg.reciever
-                ? "bg-mPurple"
-                : "bg-mBlack-300"
-            } p-3 rounded-lg`}
-          >
-            <p>{msg.msg}</p>
-            <div className="flex justify-end w-full">
-              <TimeAgo date={msg.createdAt} className="text-xs font-semibold" />
-            </div>
-          </div>
-        </div>
-      ))}
+      { msgs && msgs.length ? msgs?.map((msg: IMsg, index: number) => <Card msg={msg} key={index.toString()} />) : DummyData.map((msg: IMsg, index: number) => <Card key={index.toString()} msg={msg} dummy />) }
     </div>
   );
 };

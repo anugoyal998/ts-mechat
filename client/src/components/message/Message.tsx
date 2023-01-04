@@ -14,6 +14,10 @@ import SOCKET_EVENTS from "../../enum.socket";
 import myToast from "../../utils/myToast";
 import useActiveUsers from "../../states/useActiveUsers";
 import { IActiveUser, IMsg } from "../../types";
+import useMsgs from "../../states/useMsgs";
+
+export type ISetMsgs = (msgs: IMsg[]) => void;
+export type ISetMsgsUsingCallbackFn = (fn: (msgs: IMsg[]) => IMsg[]) => void
 
 const Message: React.FC = () => {
   const currentChat = useCurrentChat((state) => state.currentChat);
@@ -23,7 +27,6 @@ const Message: React.FC = () => {
     ServerToClientEvents,
     ClientToServerEvents
   > | null>(null);
-  const [msgs, setMsgs] = useState<IMsg[]>([]);
 
   useEffect(() => {
     const init = async () => {
@@ -63,8 +66,8 @@ const Message: React.FC = () => {
   return (
     <div className="bg-mBlack-100 w-full rounded-md shadow-xl px-5 py-3">
       <Upper />
-      <Middle msgs={msgs} setMsgs={setMsgs} socketRef={socketRef} />
-      <Editor socketRef={socketRef} setMsgs={setMsgs} />
+      <Middle socketRef={socketRef} />
+      <Editor socketRef={socketRef} />
     </div>
   );
 };

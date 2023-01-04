@@ -12,6 +12,59 @@ interface IProps {
   >;
 }
 
+const DummyData = [
+  {
+    providers: [{
+      name: "",
+      profilePhotoURL: "",
+      provider: "",
+      isEmailPassword: false
+    }],
+    username: "",
+    _id: ""
+  },
+  {
+    providers: [{
+      name: "",
+      profilePhotoURL: "",
+      provider: "",
+      isEmailPassword: false
+    }],
+    username: "",
+    _id: ""
+  },
+  {
+    providers: [{
+      name: "",
+      profilePhotoURL: "",
+      provider: "",
+      isEmailPassword: false
+    }],
+    username: "",
+    _id: ""
+  },
+  {
+    providers: [{
+      name: "",
+      profilePhotoURL: "",
+      provider: "",
+      isEmailPassword: false
+    }],
+    username: "",
+    _id: ""
+  },
+  {
+    providers: [{
+      name: "",
+      profilePhotoURL: "",
+      provider: "",
+      isEmailPassword: false
+    }],
+    username: "",
+    _id: ""
+  },
+]
+
 const AllUsers: React.FC<IProps> = ({
   allUsersState,
   setAllUsersState,
@@ -20,7 +73,7 @@ const AllUsers: React.FC<IProps> = ({
   const [search, setSearch] = useState<string>("");
   const username = useAuth((state) => state.auth.username);
 
-  if (!allUsersState) return null;
+  // if (!allUsersState) return null;
   return (
     <div
       className="bg-mBlack-100 rounded-md shadow-xl p-3"
@@ -38,11 +91,11 @@ const AllUsers: React.FC<IProps> = ({
           height: "calc(100vh - 220px)",
         }}
       >
-        {allUsersState?.map((user, index) =>
+        { allUsersState ? allUsersState?.map((user, index) =>
           user.username != username ? (
             <Card key={index.toString()} user={user} />
           ) : null
-        )}
+        ) : DummyData?.map((user, index) => <Card key={index.toString()} user={user} dummy />) }
       </div>
     </div>
   );

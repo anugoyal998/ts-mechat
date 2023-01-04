@@ -78,4 +78,10 @@ export type IActiveUsersStore = {
   setActiveUsers: (activeUsers: IActiveUser[]) => void;
 };
 
+export type IMsgsStore = {
+  msgs: IMsg[] | null;
+  setMsgs: (msgs: IMsg[]) => void;
+  setMsgsUsingCallbackFn: (fn: (msgs: IMsg[]) => IMsg[]) => void;
+}
+
 /***Zustand***/
