@@ -16,7 +16,7 @@ import { Socket } from "socket.io-client";
 import { BsChatQuote } from "react-icons/bs";
 
 export type ISetMsgs = (msgs: IMsg[]) => void;
-export type ISetMsgsUsingCallbackFn = (fn: (msgs: IMsg[]) => IMsg[]) => void
+export type ISetMsgsUsingCallbackFn = (fn: (msgs: IMsg[]) => IMsg[]) => void;
 
 const Message: React.FC = () => {
   const currentChat = useCurrentChat((state) => state.currentChat);

@@ -29,8 +29,9 @@ const Editor: React.FC<IProps> = ({ socketRef }) => {
   const currentChat = useCurrentChat((state) => state.currentChat);
   const auth = useAuth((state) => state.auth);
   const token = Cookies.get("accessToken");
-  const setMsgsUsingCallbackFn = useMsgs((state) => state.setMsgsUsingCallbackFn);
-
+  const setMsgsUsingCallbackFn = useMsgs(
+    (state) => state.setMsgsUsingCallbackFn
+  );
 
   const helpFn = async () => {
     try {

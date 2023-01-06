@@ -16,56 +16,66 @@ interface IProps {
 
 const DummyData = [
   {
-    providers: [{
-      name: "",
-      profilePhotoURL: "",
-      provider: "",
-      isEmailPassword: false
-    }],
+    providers: [
+      {
+        name: "",
+        profilePhotoURL: "",
+        provider: "",
+        isEmailPassword: false,
+      },
+    ],
     username: "",
-    _id: ""
+    _id: "",
   },
   {
-    providers: [{
-      name: "",
-      profilePhotoURL: "",
-      provider: "",
-      isEmailPassword: false
-    }],
+    providers: [
+      {
+        name: "",
+        profilePhotoURL: "",
+        provider: "",
+        isEmailPassword: false,
+      },
+    ],
     username: "",
-    _id: ""
+    _id: "",
   },
   {
-    providers: [{
-      name: "",
-      profilePhotoURL: "",
-      provider: "",
-      isEmailPassword: false
-    }],
+    providers: [
+      {
+        name: "",
+        profilePhotoURL: "",
+        provider: "",
+        isEmailPassword: false,
+      },
+    ],
     username: "",
-    _id: ""
+    _id: "",
   },
   {
-    providers: [{
-      name: "",
-      profilePhotoURL: "",
-      provider: "",
-      isEmailPassword: false
-    }],
+    providers: [
+      {
+        name: "",
+        profilePhotoURL: "",
+        provider: "",
+        isEmailPassword: false,
+      },
+    ],
     username: "",
-    _id: ""
+    _id: "",
   },
   {
-    providers: [{
-      name: "",
-      profilePhotoURL: "",
-      provider: "",
-      isEmailPassword: false
-    }],
+    providers: [
+      {
+        name: "",
+        profilePhotoURL: "",
+        provider: "",
+        isEmailPassword: false,
+      },
+    ],
     username: "",
-    _id: ""
+    _id: "",
   },
-]
+];
 
 const AllUsers: React.FC<IProps> = ({
   allUsersState,
@@ -92,11 +102,15 @@ const AllUsers: React.FC<IProps> = ({
           height: "calc(100vh - 220px)",
         }}
       >
-        { allUsersState ? allUsersState?.map((user, index) =>
-          user.username != username ? (
-            <Card key={index.toString()} user={user} />
-          ) : null
-        ) : DummyData?.map((user, index) => <Card key={index.toString()} user={user} dummy />) }
+        {allUsersState
+          ? allUsersState?.map((user, index) =>
+              user.username != username ? (
+                <Card key={index.toString()} user={user} />
+              ) : null
+            )
+          : DummyData?.map((user, index) => (
+              <Card key={index.toString()} user={user} dummy />
+            ))}
       </div>
     </div>
   );

@@ -30,7 +30,9 @@ const App: React.FC = () => {
       />
       <Route
         path="/settings"
-        element={auth.isAuth ? <Settings /> : <Navigate to="/?redirect_to=settings" />}
+        element={
+          auth.isAuth ? <Settings /> : <Navigate to="/?redirect_to=settings" />
+        }
       />
     </Routes>
   );

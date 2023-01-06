@@ -82,12 +82,14 @@ export type IMsgsStore = {
   msgs: IMsg[] | null;
   setMsgs: (msgs: IMsg[]) => void;
   setMsgsUsingCallbackFn: (fn: (msgs: IMsg[]) => IMsg[]) => void;
-}
+};
 
 export type IIsSettingsModalOpenStore = {
   isSettingsModalOpen: boolean;
   setIsSettingsModalOpen: (isSettingsModalOpen: boolean) => void;
-  setIsSettingsModalOpenUsingCallbackFn: (fn: (isSettingsModalOpen: boolean) => boolean) => void;
-}
+  setIsSettingsModalOpenUsingCallbackFn: (
+    fn: (isSettingsModalOpen: boolean) => boolean
+  ) => void;
+};
 
 /***Zustand***/

@@ -7,7 +7,7 @@ export const allUsersController = async (
   next: NextFunction
 ) => {
   try {
-    const allUsers = await UserModel.find({})
+    const allUsers = await UserModel.find({});
     const clientUsers = allUsers.map((clientUser) => ({
       _id: clientUser._id,
       username: clientUser.username,
@@ -16,8 +16,8 @@ export const allUsersController = async (
         name: ele.name,
         profilePhotoURL: ele.profilePhotoURL,
         isEmailPassword: ele.isEmailPassword,
-      }))
-    }))
+      })),
+    }));
     res.status(200).json(clientUsers);
   } catch (err) {
     return next(err);

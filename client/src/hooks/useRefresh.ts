@@ -32,8 +32,10 @@ const useRefresh = () => {
   };
 
   useEffect(() => {
-    const redirect_to = new URLSearchParams(window.location.search).get("redirect_to");
-    if(redirect_to) navigate(`/${redirect_to}`);
+    const redirect_to = new URLSearchParams(window.location.search).get(
+      "redirect_to"
+    );
+    if (redirect_to) navigate(`/${redirect_to}`);
     (async () => {
       if (accessToken && refreshToken) {
         const payload = decodeJwt(accessToken);

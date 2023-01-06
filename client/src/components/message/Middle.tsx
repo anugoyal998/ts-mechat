@@ -50,7 +50,7 @@ const DummyData: IMsg[] = [
     msgType: "",
     createdAt: 1,
   },
-]
+];
 
 interface IProps {
   socketRef: React.MutableRefObject<Socket<
@@ -113,7 +113,13 @@ const Middle: React.FC<IProps> = ({ socketRef }) => {
       /**@ts-ignore */
       ref={ref}
     >
-      { msgs && msgs.length ? msgs?.map((msg: IMsg, index: number) => <Card msg={msg} key={index.toString()} />) : DummyData.map((msg: IMsg, index: number) => <Card key={index.toString()} msg={msg} dummy />) }
+      {msgs && msgs.length
+        ? msgs?.map((msg: IMsg, index: number) => (
+            <Card msg={msg} key={index.toString()} />
+          ))
+        : DummyData.map((msg: IMsg, index: number) => (
+            <Card key={index.toString()} msg={msg} dummy />
+          ))}
     </div>
   );
 };

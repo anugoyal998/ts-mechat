@@ -15,14 +15,14 @@ const Modal: React.FC<IProps> = ({
   setIsOpen,
   setIsOpenUsingCallbackFn,
 }) => {
-    const ref = useRef<HTMLDivElement>(null)
-    const handleClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
-        if(ref.current === event.target) {
-            ref.current.classList.add("modal-exit")
-            setTimeout(() => setIsOpen(false),100)
-        }
+  const ref = useRef<HTMLDivElement>(null);
+  const handleClick = (event: React.MouseEvent<HTMLDivElement, MouseEvent>) => {
+    if (ref.current === event.target) {
+      ref.current.classList.add("modal-exit");
+      setTimeout(() => setIsOpen(false), 100);
     }
-    if(!isOpen) return null;
+  };
+  if (!isOpen) return null;
   return (
     <div
       className="w-screen h-screen absolute top-0 left-0 fcc modal-enter"

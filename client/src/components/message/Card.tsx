@@ -12,17 +12,22 @@ interface IProps {
 
 const Card: React.FC<IProps> = ({ msg, dummy }) => {
   const currentChat = useCurrentChat((state) => state.currentChat);
-  if(dummy)return (
-    <div className={`py-2 chat ${Math.floor(Math.random()*10)%2 === 1 ? "chat-start" : "chat-end"}`}>
+  if (dummy)
+    return (
+      <div
+        className={`py-2 chat ${
+          Math.floor(Math.random() * 10) % 2 === 1 ? "chat-start" : "chat-end"
+        }`}
+      >
         <div className="w-[60%] p-3 chat-bubble bg-mBlack-300">
-            <div className="skeleton skeleton-text"></div>
-            <div className="skeleton skeleton-text"></div>
-            <div className="flex justify-end">
-                <div className="w-[10%] skeleton skeleton-text"></div>
-            </div>
+          <div className="skeleton skeleton-text"></div>
+          <div className="skeleton skeleton-text"></div>
+          <div className="flex justify-end">
+            <div className="w-[10%] skeleton skeleton-text"></div>
+          </div>
         </div>
-    </div>
-  )
+      </div>
+    );
   return (
     <div
       className={`${
