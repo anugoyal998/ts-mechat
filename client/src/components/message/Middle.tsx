@@ -1,16 +1,18 @@
 import React, { useEffect, useRef, useState } from "react";
-import { getMsgs as getMsgsApi } from "../../api";
-import useAuth from "../../states/useAuth";
-import useCurrentChat from "../../states/useCurrentChat";
-import myAlert from "../../utils/myAlert";
-import Cookies from "js-cookie";
 import { IMsg } from "../../types";
-import { Socket } from "socket.io-client";
 import { ClientToServerEvents, ServerToClientEvents } from "../../socket.types";
 import SOCKET_EVENTS from "../../enum.socket";
-import { ISetMsgs } from "./Message";
-import Card from "./Card";
+
+import useAuth from "../../states/useAuth";
+import useCurrentChat from "../../states/useCurrentChat";
 import useMsgs from "../../states/useMsgs";
+
+import { getMsgs as getMsgsApi } from "../../api";
+
+import myAlert from "../../utils/myAlert";
+import Cookies from "js-cookie";
+import { Socket } from "socket.io-client";
+import Card from "./Card";
 
 const DummyData: IMsg[] = [
   {

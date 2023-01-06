@@ -1,20 +1,19 @@
-import React, { useRef, useEffect, useState } from "react";
-import pattern from "../../assets/pattern.png";
-import { BsChatQuote } from "react-icons/bs";
+import React, { useRef, useEffect } from "react";
+import { IMsg } from "../../types";
+import { ClientToServerEvents, ServerToClientEvents } from "../../socket.types";
+import SOCKET_EVENTS from "../../enum.socket";
+import { initSocket } from "../../socket";
 
 import useCurrentChat from "../../states/useCurrentChat";
+import useAuth from "../../states/useAuth";
+import useActiveUsers from "../../states/useActiveUsers";
+
 import Upper from "./Upper";
 import Middle from "./Middle";
 import Editor from "./Editor";
-import { initSocket } from "../../socket";
-import { ClientToServerEvents, ServerToClientEvents } from "../../socket.types";
 import { Socket } from "socket.io-client";
-import useAuth from "../../states/useAuth";
-import SOCKET_EVENTS from "../../enum.socket";
-import myToast from "../../utils/myToast";
-import useActiveUsers from "../../states/useActiveUsers";
-import { IActiveUser, IMsg } from "../../types";
-import useMsgs from "../../states/useMsgs";
+
+import { BsChatQuote } from "react-icons/bs";
 
 export type ISetMsgs = (msgs: IMsg[]) => void;
 export type ISetMsgsUsingCallbackFn = (fn: (msgs: IMsg[]) => IMsg[]) => void

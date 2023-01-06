@@ -1,6 +1,8 @@
 import React, { useState } from "react";
 import { IWhoAmIResponse } from "../../api";
+
 import useAuth from "../../states/useAuth";
+
 import Card from "./Card";
 import Searchbar from "./Searchbar";
 
@@ -73,7 +75,6 @@ const AllUsers: React.FC<IProps> = ({
   const [search, setSearch] = useState<string>("");
   const username = useAuth((state) => state.auth.username);
 
-  // if (!allUsersState) return null;
   return (
     <div
       className="bg-mBlack-100 rounded-md shadow-xl p-3"

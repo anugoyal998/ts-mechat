@@ -1,0 +1,28 @@
+{
+  "name": "ts-mechat",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "format": "prettier --write ."
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/anugoyal998/ts-mechat.git"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "npm run format && git add -A ."
+    }
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/anugoyal998/ts-mechat/issues"
+  },
+  "homepage": "https://github.com/anugoyal998/ts-mechat#readme",
+  "devDependencies": {
+    "husky": "^8.0.3"
+  }
+}

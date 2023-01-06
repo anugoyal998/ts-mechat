@@ -1,15 +1,19 @@
 import React, { useState } from "react";
-import { TbSend } from "react-icons/tb";
+import { IMsg } from "../../types";
+import { ClientToServerEvents, ServerToClientEvents } from "../../socket.types";
+import SOCKET_EVENTS from "../../enum.socket";
+
 import useAuth from "../../states/useAuth";
 import useCurrentChat from "../../states/useCurrentChat";
-import { Socket } from "socket.io-client";
-import { ClientToServerEvents, ServerToClientEvents } from "../../socket.types";
-import myAlert from "../../utils/myAlert";
-import { sendMsg as sendMsgApi } from "../../api";
-import Cookies from "js-cookie";
-import SOCKET_EVENTS from "../../enum.socket";
-import { IMsg } from "../../types";
 import useMsgs from "../../states/useMsgs";
+
+import { Socket } from "socket.io-client";
+import myAlert from "../../utils/myAlert";
+import Cookies from "js-cookie";
+
+import { TbSend } from "react-icons/tb";
+
+import { sendMsg as sendMsgApi } from "../../api";
 
 interface IProps {
   socketRef: React.MutableRefObject<Socket<

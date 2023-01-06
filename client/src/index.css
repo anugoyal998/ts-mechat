@@ -35,6 +35,34 @@
   }
 }
 
+.modal-enter {
+  animation: modal-enter-animation 150ms linear
+}
+
+@keyframes modal-enter-animation {
+  0% {
+    opacity: 0;
+  }
+
+  100% {    
+    opacity: 1;
+  }
+}
+
+.modal-exit {
+  animation: modal-exit-animation 150ms linear
+}
+
+@keyframes modal-exit-animation {
+  0% {
+    opacity: 1;
+  }
+
+  100% {    
+    opacity: 0;
+  }
+}
+
 @layer components {
   .fcc {
     @apply flex justify-center items-center;

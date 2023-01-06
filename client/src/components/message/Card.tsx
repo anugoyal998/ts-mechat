@@ -1,7 +1,9 @@
 import React from "react";
-import useCurrentChat from "../../states/useCurrentChat";
-import TimeAgo from "react-timeago";
 import { IMsg } from "../../types";
+
+import useCurrentChat from "../../states/useCurrentChat";
+
+import TimeAgo from "react-timeago";
 
 interface IProps {
   msg: IMsg;

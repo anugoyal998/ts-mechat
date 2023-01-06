@@ -5,12 +5,14 @@ import Cookies from "js-cookie";
 import myToast from "../utils/myToast";
 import myAlert from "../utils/myAlert";
 
-import { FiChevronDown, FiLogOut } from "react-icons/fi";
+import { FiChevronDown, FiLogOut, FiSettings } from "react-icons/fi";
 import { BiUserCircle } from "react-icons/bi";
 import { BsChatQuote } from "react-icons/bs";
 
 import { IRefreshTokenBody, logout } from "../api";
 import { IUserDetailsState } from "../types";
+import useIsSettingsModalOpen from "../states/useIsSettingsModalOpen";
+import { useNavigate } from "react-router-dom";
 
 interface IProps {
   userDetails: IUserDetailsState | undefined;
@@ -18,6 +20,10 @@ interface IProps {
 
 const NavUser: React.FC<IProps> = ({ userDetails }) => {
   const auth = useAuth((state) => state.auth);
+  const setIsSettingsModalOpen = useIsSettingsModalOpen(
+    (state) => state.setIsSettingsModalOpen
+  );
+  const navigate = useNavigate();
   const handleLogout = async () => {
     try {
       const refreshToken = Cookies.get("refreshToken") as string;
@@ -84,6 +90,13 @@ const NavUser: React.FC<IProps> = ({ userDetails }) => {
         <hr className="opacity-60 my-2" />
         <li>
           <Card
+            name="Settings"
+            icon={<FiSettings className="text-3xl" />}
+            handleClick={() => navigate("/settings")}
+          />
+        </li>
+        <li>
+          <Card
             name="Logout"
             icon={<FiLogOut className="text-3xl" />}
             handleClick={handleLogout}
@@ -99,7 +112,7 @@ interface ICardProps {
   profilePhotoURL?: string;
   provider?: string;
   icon?: ReactNode;
-  handleClick?: () => Promise<void>;
+  handleClick?: () => Promise<void> | void;
 }
 
 const Card: React.FC<ICardProps> = ({

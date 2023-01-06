@@ -1,6 +1,7 @@
 import React from "react";
-import { HiSearch } from "react-icons/hi";
 import { IWhoAmIResponse } from "../../api";
+
+import { HiSearch } from "react-icons/hi";
 
 interface IProps {
   value: string;

@@ -1,8 +1,10 @@
 import React, { useState, useEffect } from "react";
-import { BiArrowBack } from "react-icons/bi";
+
 import useActiveUsers from "../../states/useActiveUsers";
 import useAuth from "../../states/useAuth";
 import useCurrentChat from "../../states/useCurrentChat";
+
+import { BiArrowBack } from "react-icons/bi";
 
 const Upper: React.FC = () => {
   const currentChat = useCurrentChat((state) => state.currentChat);

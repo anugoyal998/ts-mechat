@@ -84,4 +84,10 @@ export type IMsgsStore = {
   setMsgsUsingCallbackFn: (fn: (msgs: IMsg[]) => IMsg[]) => void;
 }
 
+export type IIsSettingsModalOpenStore = {
+  isSettingsModalOpen: boolean;
+  setIsSettingsModalOpen: (isSettingsModalOpen: boolean) => void;
+  setIsSettingsModalOpenUsingCallbackFn: (fn: (isSettingsModalOpen: boolean) => boolean) => void;
+}
+
 /***Zustand***/
