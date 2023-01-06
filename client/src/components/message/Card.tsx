@@ -30,21 +30,11 @@ const Card: React.FC<IProps> = ({ msg, dummy }) => {
     );
   return (
     <div
-      className={`${
-        currentChat?.username === msg.reciever ? "chat-end" : "chat-start"
-      } py-2 chat`}
+      className={`${currentChat?.username === msg.reciever ? "chat-end" : "chat-start"} py-2 chat`}
     >
-      <div
-        className={`w-[60%] ${
-          currentChat?.username === msg.reciever
-            ? "bg-mPurple"
-            : "bg-mBlack-300"
-        } p-3 chat-bubble`}
-      >
+      <div className={`w-[60%] ${currentChat?.username === msg.reciever ? "bg-mPurple" : "bg-mBlack-300"} p-3 chat-bubble`}>
         <p className="text-white">{msg.msg}</p>
-        <div className="flex justify-end w-full">
-          <TimeAgo date={msg.createdAt} className="text-xs font-semibold" />
-        </div>
+        <div className="flex justify-end w-full"><TimeAgo date={msg.createdAt} className="text-xs font-semibold" />        </div>
       </div>
     </div>
   );

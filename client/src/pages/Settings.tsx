@@ -4,7 +4,7 @@ import Navbar from "../components/Navbar";
 import { IUserDetailsState } from "../types";
 import { whoAmI as whoAmIApi } from "../api";
 import myAlert from "../utils/myAlert";
-import { Settings as TsSettings } from "../components/settings/Settings";
+import SettingsComponent from "../components/settings/SettingsComponent";
 
 const Settings: React.FC = () => {
   const [userDetails, setUserDetails] = useState<IUserDetailsState>();
@@ -26,7 +26,7 @@ const Settings: React.FC = () => {
         <div className="h-[20px]"></div>
         <Navbar userDetails={userDetails} />
       </div>
-      <TsSettings />
+      <SettingsComponent />
     </div>
   );
 };

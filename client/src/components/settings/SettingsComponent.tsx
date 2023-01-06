@@ -1,7 +1,9 @@
 import React from "react";
 import useAuth from "../../states/useAuth";
 
-export const Settings = () => {
+const SettingsComponent = () => {
   const auth = useAuth((state) => state.auth);
   return <div></div>;
 };
+
+export default SettingsComponent

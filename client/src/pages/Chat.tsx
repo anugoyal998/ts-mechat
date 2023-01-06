@@ -10,7 +10,7 @@ import myAlert from "../utils/myAlert";
 import AllUsers from "../components/allUsers/AllUsers";
 import Message from "../components/message/Message";
 import Modal from "../components/Modal";
-import Settings from "../components/settings/Settings";
+import Settings from "../components/settings/SettingsComponent";
 import useIsSettingsModalOpen from "../states/useIsSettingsModalOpen";
 
 const Chat: React.FC = () => {
