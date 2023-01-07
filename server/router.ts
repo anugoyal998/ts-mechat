@@ -11,6 +11,7 @@ import {
   allUsersController,
   sendMsgController,
   getMsgsController,
+  updateProfileController,
 } from "./controllers";
 const router = express.Router();
 
@@ -26,5 +27,6 @@ router.post("/refresh", refreshController);
 router.get("/allUsers", auth, allUsersController);
 router.post("/send-msg", auth, sendMsgController);
 router.post("/get-msgs", auth, getMsgsController);
+router.post("/update-profile", auth, updateProfileController);
 
 export default router;

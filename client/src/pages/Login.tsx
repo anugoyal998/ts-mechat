@@ -99,7 +99,7 @@ const Login: React.FC = () => {
             setState={setState}
           />
           <button
-            className="w-full bg-mOrange text-white py-3 rounded-3xl mt-8 shadow-xl hover:text-white hover:bg-mBlack-300 animation font-semibold"
+            className="w-full mt-8 btn-mechat-orange"
             onClick={handleLoginClick}
           >
             Login

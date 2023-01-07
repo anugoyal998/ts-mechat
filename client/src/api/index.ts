@@ -17,7 +17,7 @@ export type IRefreshTokenBody = {
   refreshToken: string;
 };
 
-type IProvider = {
+export type IProvider = {
   provider: string;
   name: string;
   profilePhotoURL: string;
@@ -129,3 +129,28 @@ export const getMsgs = (reciever: string, token: string) =>
   );
 
 /*** Get Msgs */
+
+/*** Update Profile ***/
+
+export type IUpdateProfileProvider = {
+  provider: string;
+  profilePhotoURL: string;
+};
+
+export type IUpdateProfileBody = {
+  name: string;
+  providers: IUpdateProfileProvider[];
+};
+
+export type IUpdateProfileResponse = {
+  message: string;
+};
+
+export const updateProfile = (data: IUpdateProfileBody, token: string) =>
+  api.post<IToken>("/api/update-profile", data, {
+    headers: {
+      Authorization: `Bearer ${token}`,
+    },
+  });
+
+/*** Update Profile ***/

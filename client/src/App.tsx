@@ -13,6 +13,7 @@ import Settings from "./pages/Settings";
 const App: React.FC = () => {
   const auth = useAuth((state) => state.auth);
   useRefresh();
+  console.log(auth);
 
   return (
     <Routes>

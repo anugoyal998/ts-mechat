@@ -63,11 +63,18 @@
   }
 }
 
+.file-input::file-selector-button {
+  background-color: #16161b !important;
+}
+
 @layer components {
   .fcc {
     @apply flex justify-center items-center;
   }
   .animation {
     @apply transition-all ease-in-out duration-300;
+  }
+  .btn-mechat-orange {
+    @apply bg-mOrange text-white py-3 rounded-3xl shadow-xl hover:text-white hover:bg-mBlack-300 animation font-semibold;
   }
 }

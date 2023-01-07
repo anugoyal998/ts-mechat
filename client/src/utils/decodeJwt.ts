@@ -18,6 +18,8 @@ function decodeJwt(token: string) {
   if (!jsonData) return null;
   if (jsonData && jsonData.createdAt + 3600 * 1000 < Date.now())
     return "timeout";
+
+  console.log(jsonData);
   return jsonData;
 }
 
