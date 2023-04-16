@@ -1,4 +1,3 @@
-require("./db")();
 import express, { Application, Request, Response } from "express";
 import http from "http";
 import cors from "cors";
@@ -19,6 +18,7 @@ app.use(errorHandler);
 app.get("/", (req: Request, res: Response) => {
   res.send("<h1> Hello World!! </h1>");
 });
+require("./db")();
 app.use("/api", router);
 
 /** Socket.io  ***/
