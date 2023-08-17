@@ -1,7 +1,7 @@
 <h1 align="center"> <a href="https://github.com/anugoyal998/MeChat"><strong> ✨ MeChat ✨</strong></a></h1>
 <div align="center">
 
-![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)  ![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)  ![Socket.io](https://img.shields.io/badge/Socket.io-black?style=for-the-badge&logo=socket.io&badgeColor=010101)  ![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)  ![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)
+![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)  ![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)  ![Socket.io](https://img.shields.io/badge/Socket.io-black?**style**=for-the-badge&logo=socket.io&badgeColor=010101)  ![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)  ![MongoDB](https://img.shields.io/badge/MongoDB-%234ea94b.svg?style=for-the-badge&logo=mongodb&logoColor=white)
 
 <div>
 
@@ -31,7 +31,22 @@ Website Link: [Me Chat](https://chat-app-sandy-eta.vercel.app/)
 * Socket.io
   
 ### Flow Diagram  
-<img src="md-img/MeChat.png">
+<img src="images/MeChat.png">
+
+### Screenshots
+
+###### Login Page
+<img src="images/login.png">
+
+###### Home Page
+<img src="images/home.png">
+
+###### Edit Profile
+<img src="images/edit.png">
+
+###### Mobile Screen
+<img src="images/mobile-register.jpeg">  
+<img src="images/mobile-home.jpeg">
 
 ### Client Side
 #### `npm install`
@@ -82,8 +97,5 @@ Open [http://localhost:5000](http://localhost:5000) to run server.
 
 You will also see any errors or information in the console
 
-###### Mobile Screen
-<img src="md-img/home-mobile.png">
-<img src="md-img/chat-mobile.png">
 
 </div>
