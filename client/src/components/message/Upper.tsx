@@ -1,39 +1,43 @@
-import React, { useState, useEffect } from "react";
-
-import useActiveUsers from "../../states/useActiveUsers";
-import useAuth from "../../states/useAuth";
-import useCurrentChat from "../../states/useCurrentChat";
-
+import React, { useEffect, useState } from "react";
+import { getProfilePhoto } from "@/lib/getProfilePhoto";
+import { useActiveUsers, useCurrentChat } from "@/zustand";
+import Image from "next/image";
 import { BiArrowBack } from "react-icons/bi";
+import { User } from "supertokens-node";
 
-const Upper: React.FC = () => {
-  const currentChat = useCurrentChat((state) => state.currentChat);
-  const auth = useAuth((state) => state.auth);
-  const activeUsers = useActiveUsers((state) => state.activeUsers);
-  const [isOnline, setIsOnline] = useState<Boolean>(false);
+export default function Upper({ user }: { user: User }) {
+  const { currentChat } = useCurrentChat();
+  const { activeUsers } = useActiveUsers();
+  const [isOnline, setIsOnline] = useState(false);
 
   useEffect(() => {
-    const find = activeUsers?.find(
-      (e) => e?.user?.username === currentChat?.username
-    );
+    const find = activeUsers?.find((e) => e === currentChat?.id);
     if (find) setIsOnline(true);
     else setIsOnline(false);
-  }, [activeUsers, currentChat, auth]);
+  }, [activeUsers, currentChat, user]);
 
   return (
-    <div className="bg-mBlack-300 w-full rounded-xl py-2 px-5 flex items-center space-x-3 h-[65px]">
+    <div className="bg-primary w-full rounded-xl py-2 px-5 flex items-center space-x-3 h-[65px]">
       <div className="sm:hidden cursor-pointer">
-        <BiArrowBack />
+        <BiArrowBack className="text-white" />
       </div>
       <div className="flex items-center space-x-2">
-        <img src={currentChat?.profilePhotoURL} className="rounded-full w-12" />
+        <Image
+          src={getProfilePhoto(user)}
+          alt="user-photo"
+          width={48}
+          height={48}
+          className="rounded-full"
+        />
         <div>
-          <p className="capitalize text-white text-lg">{currentChat?.name}</p>
-          <p className="text-sm">{isOnline ? "Online" : "Offline"}</p>
+          <p className="capitalize text-white text-lg">
+            {currentChat?.emails?.[0]?.split("@")[0]}
+          </p>
+          <p className="text-sm text-gray-400">
+            {isOnline ? "Online" : "Offline"}
+          </p>
         </div>
       </div>
     </div>
   );
-};
-
-export default Upper;
+}

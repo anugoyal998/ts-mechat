@@ -1,100 +1,85 @@
 import React, { useState } from "react";
-import { IMsg } from "../../types";
-import { ClientToServerEvents, ServerToClientEvents } from "../../socket.types";
-import SOCKET_EVENTS from "../../enum.socket";
-
-import useAuth from "../../states/useAuth";
-import useCurrentChat from "../../states/useCurrentChat";
-import useMsgs from "../../states/useMsgs";
-
-import { Socket } from "socket.io-client";
-import myAlert from "../../utils/myAlert";
-import Cookies from "js-cookie";
-
+import {
+  ClientToServerEvents,
+  ServerToClientEvents,
+} from "@/socket/socket.types";
 import { TbSend } from "react-icons/tb";
+import { Socket } from "socket.io-client";
+import { useCurrentChat, useMsgs } from "@/zustand";
+import { User } from "supertokens-node";
+import { Button } from "../ui/button";
+import SOCKET_EVENTS from "@/socket/enum.socket";
+import axios from "axios";
+import { v4 as uuidv4 } from "uuid";
 
-import { sendMsg as sendMsgApi } from "../../api";
-
-interface IProps {
+interface Props {
   socketRef: React.MutableRefObject<Socket<
     ServerToClientEvents,
     ClientToServerEvents
   > | null>;
+  user: User | undefined;
 }
 
-const Editor: React.FC<IProps> = ({ socketRef }) => {
+export default function Editor({ socketRef, user }: Props) {
   const [msg, setMsg] = useState<
     string | number | readonly string[] | undefined
   >("");
-  const currentChat = useCurrentChat((state) => state.currentChat);
-  const auth = useAuth((state) => state.auth);
-  const token = Cookies.get("accessToken");
-  const setMsgsUsingCallbackFn = useMsgs(
-    (state) => state.setMsgsUsingCallbackFn
-  );
-
-  const helpFn = async () => {
+  const { currentChat } = useCurrentChat();
+  const { setMsgsUsingCallbackFn } = useMsgs();
+  const [isLoading, setIsLoading] = useState(false);
+  async function helpFn(user: User) {
     try {
-      /*@ts-ignore */
-      socketRef.current?.emit(SOCKET_EVENTS.send_msg, {
-        sender: auth.username,
-        reciever: currentChat?.username,
+      setIsLoading(true);
+      const payload = {
+        sender: user.id,
+        reciever: currentChat?.id as string,
         msgType: "text",
         msg,
-      });
-      await sendMsgApi(
-        { reciever: currentChat?.username as string, msg, msgType: "text" },
-        token as string
-      );
+        id: uuidv4(),
+        createdat: new Date(Date.now()).toUTCString(),
+      };
+      /* @ts-ignore */
+      socketRef.current?.emit(SOCKET_EVENTS.send_msg, payload);
+      await axios.post("/api/send-msg", { ...payload, sender: undefined });
       setMsg("");
-      setMsgsUsingCallbackFn((prev: IMsg[]) => [
-        ...prev,
-        {
-          sender: auth.username,
-          reciever: currentChat?.username as string,
-          msgType: "text",
-          msg,
-          createdAt: Date.now(),
-        },
-      ]);
-    } catch (err) {
-      myAlert(err);
+      setMsgsUsingCallbackFn((prev) => [...prev, payload]);
+    } catch (error) {
+    } finally {
+      setIsLoading(false);
     }
-  };
-
-  const sendMsg = async (
+  }
+  async function sendMsg(
     e:
       | React.MouseEvent<HTMLButtonElement, MouseEvent>
       | React.KeyboardEvent<HTMLTextAreaElement>
-  ) => {
-    if (!msg || !socketRef) return;
+  ) {
+    if (!msg || !socketRef || !user) return;
     if (e.type === "keydown") {
       const keyboardEvent = e as React.KeyboardEvent<HTMLTextAreaElement>;
       if (keyboardEvent.code === "Enter" && keyboardEvent.ctrlKey) {
-        helpFn();
+        helpFn(user);
       }
     } else if (e.type === "click") {
-      helpFn();
+      helpFn(user);
     }
-  };
-
+  }
   return (
-    <div className="bg-mBlack-300 w-full rounded-xl py-2 px-5 h-[65px] fcc">
+    <div className="bg-primary w-full rounded-xl py-2 px-5 h-[65px] flex justify-center items-center">
       <textarea
         className="w-full h-[45px] bg-transparent outline-none border border-gray-400 rounded-3xl px-5 text-white"
-        placeholder="Write your message..."
+        placeholder="Write you message..."
         value={msg}
         onChange={(e) => setMsg(e.target.value)}
         onKeyDown={sendMsg}
+        disabled={isLoading}
       />
-      <button
-        className="bg-mOrange py-2 px-3 rounded-lg ml-3"
+      <Button
+        className="bg-orng py-2 px-3 rounded-lg ml-3"
         onClick={sendMsg}
+        disabled={isLoading}
       >
         <TbSend className="text-white text-3xl" />
-      </button>
+      </Button>
     </div>
   );
-};
-
-export default Editor;
+}

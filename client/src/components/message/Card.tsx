@@ -1,25 +1,26 @@
+import { TMSG } from "@/types";
+import { useCurrentChat } from "@/zustand";
 import React from "react";
-import { IMsg } from "../../types";
-
-import useCurrentChat from "../../states/useCurrentChat";
 
 import TimeAgo from "react-timeago";
 
-interface IProps {
-  msg: IMsg;
+interface Props {
+  msg: TMSG;
   dummy?: boolean;
 }
 
-const Card: React.FC<IProps> = ({ msg, dummy }) => {
-  const currentChat = useCurrentChat((state) => state.currentChat);
-  if (dummy)
+export default function Card({ msg, dummy }: Props) {
+  const { currentChat } = useCurrentChat();
+  if (dummy) {
     return (
       <div
-        className={`py-2 chat ${
-          Math.floor(Math.random() * 10) % 2 === 1 ? "chat-start" : "chat-end"
+        className={`py-2 flex ${
+          Math.floor(Math.random() * 10) % 2 === 1
+            ? "justify-start"
+            : "justify-end"
         }`}
       >
-        <div className="w-[60%] p-3 chat-bubble bg-mBlack-300">
+        <div className="w-[60%] p-3 chat-bubble rounded-sm bg-primary">
           <div className="skeleton skeleton-text"></div>
           <div className="skeleton skeleton-text"></div>
           <div className="flex justify-end">
@@ -28,26 +29,26 @@ const Card: React.FC<IProps> = ({ msg, dummy }) => {
         </div>
       </div>
     );
+  }
   return (
     <div
-      className={`${
-        currentChat?.username === msg.reciever ? "chat-end" : "chat-start"
-      } py-2 chat`}
+      className={`flex py-2 ${
+        currentChat?.id === msg.reciever ? "justify-end" : "justify-start"
+      }`}
     >
       <div
         className={`w-[60%] ${
-          currentChat?.username === msg.reciever
-            ? "bg-mPurple"
-            : "bg-mBlack-300"
-        } p-3 chat-bubble`}
+          currentChat?.id === msg.reciever ? "bg-purpl" : "bg-primary"
+        } p-3 rounded-sm chat-bubble`}
       >
         <p className="text-white">{msg.msg}</p>
         <div className="flex justify-end w-full">
-          <TimeAgo date={msg.createdAt} className="text-xs font-semibold" />{" "}
+          <TimeAgo
+            date={msg.createdat}
+            className="text-xs font-semibold text-white"
+          />
         </div>
       </div>
     </div>
   );
-};
-
-export default Card;
+}

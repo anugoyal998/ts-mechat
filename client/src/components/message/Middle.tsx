@@ -1,100 +1,52 @@
+import SOCKET_EVENTS from "@/socket/enum.socket";
+import {
+  ClientToServerEvents,
+  ServerToClientEvents,
+} from "@/socket/socket.types";
+import { TMSG } from "@/types";
+import { useCurrentChat, useMsgs } from "@/zustand";
+import { useQuery } from "@tanstack/react-query";
+import axios from "axios";
 import React, { useEffect, useRef, useState } from "react";
-import { IMsg } from "../../types";
-import { ClientToServerEvents, ServerToClientEvents } from "../../socket.types";
-import SOCKET_EVENTS from "../../enum.socket";
-
-import useAuth from "../../states/useAuth";
-import useCurrentChat from "../../states/useCurrentChat";
-import useMsgs from "../../states/useMsgs";
-
-import { getMsgs as getMsgsApi } from "../../api";
-
-import myAlert from "../../utils/myAlert";
-import Cookies from "js-cookie";
 import { Socket } from "socket.io-client";
+import { User } from "supertokens-node";
 import Card from "./Card";
 
-const DummyData: IMsg[] = [
-  {
-    sender: "",
-    reciever: "",
-    msg: "",
-    msgType: "",
-    createdAt: 1,
-  },
-  {
-    sender: "",
-    reciever: "",
-    msg: "",
-    msgType: "",
-    createdAt: 1,
-  },
-  {
-    sender: "",
-    reciever: "",
-    msg: "",
-    msgType: "",
-    createdAt: 1,
-  },
-  {
-    sender: "",
-    reciever: "",
-    msg: "",
-    msgType: "",
-    createdAt: 1,
-  },
-  {
-    sender: "",
-    reciever: "",
-    msg: "",
-    msgType: "",
-    createdAt: 1,
-  },
-];
+const DummyData: TMSG[] = Array.from({ length: 10 }).map(() => ({
+  sender: "",
+  reciever: "",
+  msg: "",
+  msgType: "",
+  createdat: "",
+  id: "",
+}));
 
-interface IProps {
+interface Props {
   socketRef: React.MutableRefObject<Socket<
     ServerToClientEvents,
     ClientToServerEvents
   > | null>;
+  user: User | undefined;
 }
 
-const Middle: React.FC<IProps> = ({ socketRef }) => {
-  const auth = useAuth((state) => state.auth);
-  const currentChat = useCurrentChat((state) => state.currentChat);
-  const [msgs, setMsgs] = useMsgs((state) => [state.msgs, state.setMsgs]);
+async function getMsgs(reciever: string) {
+  const { data } = await axios.post<TMSG[]>("/api/get-msgs", { reciever });
+  return data;
+}
+
+export default function Middle({ socketRef, user }: Props) {
+  const { currentChat } = useCurrentChat();
+  const { msgs, setMsgs } = useMsgs();
   const ref = useRef();
-  const [temp, setTemp] = useState<IMsg>();
-  const token = Cookies.get("accessToken");
-  useEffect(() => {
-    (async () => {
-      try {
-        const rsp = await getMsgsApi(
-          currentChat?.username as string,
-          token as string
-        );
-        let allMsgs = rsp.data;
-        allMsgs.sort((a: IMsg, b: IMsg) => {
-          let x = a.createdAt;
-          let y = b.createdAt;
-          if (x < y) return -1;
-          if (x > y) return 1;
-          return 0;
-        });
-        setMsgs(allMsgs);
-      } catch (err) {
-        myAlert(err);
-      }
-    })();
-  }, [currentChat, auth, temp]);
+  const [temp, setTemp] = useState<TMSG>();
 
   useEffect(() => {
     if (!socketRef) return;
-    /**@ts-ignore */
-    socketRef.current.on(SOCKET_EVENTS.rec_msg, (data) => {
+    /** @ts-ignore */
+    socketRef.current.on(SOCKET_EVENTS.rec_msg, (data: any) => {
       setTemp(data);
     });
-  }, [socketRef?.current]);
+  }, [socketRef.current]);
 
   useEffect(() => {
     if (ref) {
@@ -106,22 +58,28 @@ const Middle: React.FC<IProps> = ({ socketRef }) => {
     }
   }, [ref]);
 
+  const { data, isLoading, isError } = useQuery({
+    queryFn: async () => await getMsgs(currentChat?.id as string),
+    queryKey: [currentChat, user, temp],
+    placeholderData: (previousData) => previousData,
+  });
+
+  useEffect(() => {
+    setMsgs(data);
+  }, [data]);
+
   return (
     <div
-      style={{ height: "calc(100vh - 290px)" }}
       className="overflow-y-scroll"
-      /**@ts-ignore */
+      style={{ height: "calc(100vh - 290px)" }}
+      /* @ts-ignore */
       ref={ref}
     >
-      {msgs && msgs.length
-        ? msgs?.map((msg: IMsg, index: number) => (
-            <Card msg={msg} key={index.toString()} />
-          ))
-        : DummyData.map((msg: IMsg, index: number) => (
-            <Card key={index.toString()} msg={msg} dummy />
+      {msgs && msgs.length > 0
+        ? msgs.map((msg, index) => <Card msg={msg} key={`card-${index}`} />)
+        : DummyData.map((msg, index) => (
+            <Card msg={msg} dummy key={`index-${index}`} />
           ))}
     </div>
   );
-};
-
-export default Middle;
+}

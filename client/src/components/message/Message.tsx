@@ -1,27 +1,21 @@
-import React, { useRef, useEffect } from "react";
-import { IMsg } from "../../types";
-import { ClientToServerEvents, ServerToClientEvents } from "../../socket.types";
-import SOCKET_EVENTS from "../../enum.socket";
-import { initSocket } from "../../socket";
-
-import useCurrentChat from "../../states/useCurrentChat";
-import useAuth from "../../states/useAuth";
-import useActiveUsers from "../../states/useActiveUsers";
-
-import Upper from "./Upper";
-import Middle from "./Middle";
-import Editor from "./Editor";
-import { Socket } from "socket.io-client";
-
+import { useActiveUsers, useCurrentChat } from "@/zustand";
+import React, { useEffect, useRef } from "react";
 import { BsChatQuote } from "react-icons/bs";
+import { User } from "supertokens-node";
+import Upper from "./Upper";
+import { Socket } from "socket.io-client";
+import {
+  ClientToServerEvents,
+  ServerToClientEvents,
+} from "@/socket/socket.types";
+import { initSocket } from "@/socket/socket";
+import SOCKET_EVENTS from "@/socket/enum.socket";
+import Editor from "./Editor";
+import Middle from "./Middle";
 
-export type ISetMsgs = (msgs: IMsg[]) => void;
-export type ISetMsgsUsingCallbackFn = (fn: (msgs: IMsg[]) => IMsg[]) => void;
-
-const Message: React.FC = () => {
-  const currentChat = useCurrentChat((state) => state.currentChat);
-  const auth = useAuth((state) => state.auth);
-  const setActiveUsers = useActiveUsers((state) => state.setActiveUsers);
+export default function Message({ user }: { user: User | undefined }) {
+  const { currentChat } = useCurrentChat();
+  const { setActiveUsers } = useActiveUsers();
   const socketRef = useRef<Socket<
     ServerToClientEvents,
     ClientToServerEvents
@@ -38,22 +32,22 @@ const Message: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    if (!socketRef.current) return;
-    /*@ts-ignore*/
-    socketRef.current.emit(SOCKET_EVENTS.user_online, auth);
+    if (!socketRef.current || !user) return;
+    /* @ts-ignore */
+    socketRef.current.emit(SOCKET_EVENTS.user_online, user.id);
   }, [socketRef.current]);
 
   useEffect(() => {
     if (!socketRef.current) return;
     /*@ts-ignore*/
-    socketRef.current.on(SOCKET_EVENTS.activeUsers, (data) => {
+    socketRef.current.on(SOCKET_EVENTS.activeUsers, (data: string[]) => {
       setActiveUsers(data);
     });
   }, [socketRef.current]);
 
   if (!currentChat) {
     return (
-      <div className="w-full bg-mBlack-100 rounded-md shadow-xl fcc">
+      <div className="w-full bg-secondary rounded-md shadow-xl flex justify-center items-center">
         <div className="flex space-x-2 items-center">
           <BsChatQuote className="text-7xl text-white" />
           <p className="text-white font-semibold text-5xl">MeChat</p>
@@ -61,14 +55,12 @@ const Message: React.FC = () => {
       </div>
     );
   }
-
+  if (!user) return null;
   return (
-    <div className="bg-mBlack-100 w-full rounded-md shadow-xl px-5 py-3">
-      <Upper />
-      <Middle socketRef={socketRef} />
-      <Editor socketRef={socketRef} />
+    <div className="bg-secondary w-full rounded-md shadow-xl px-5 py-3">
+      <Upper user={user} />
+      <Middle socketRef={socketRef} user={user} />
+      <Editor socketRef={socketRef} user={user} />
     </div>
   );
-};
-
-export default Message;
+}
