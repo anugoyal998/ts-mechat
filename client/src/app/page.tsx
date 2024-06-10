@@ -14,7 +14,7 @@ import { User } from "supertokens-node";
 import AllUsers from "@/components/AllUsers";
 import Message from "@/components/message/Message";
 
-export async function getUser() {
+async function getUser() {
   const { data } = await axios.get<User>("/api/get-user");
   return data;
 }
